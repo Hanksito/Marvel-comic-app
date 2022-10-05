@@ -1,42 +1,19 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			characters:{},
+			series:{},
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			get_characters:async()=>{
+				const response = await fetch('https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8df922590d9140fd72e93b652577d3c4&hash=43456862af48e8492a7dd548a1752f38')
+				const data = await response.json()
+				setStore({characters:data.data.results})
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			get_series:async()=>{
+				const response = await fetch('https://gateway.marvel.com:443/v1/public/series?ts=1&apikey=8df922590d9140fd72e93b652577d3c4&hash=43456862af48e8492a7dd548a1752f38')
+				const data = await response.json()
+				setStore({series:data.data})
 			}
 		}
 	};

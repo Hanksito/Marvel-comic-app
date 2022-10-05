@@ -1,0 +1,8 @@
+#imgcard{
+    max-height: 207px;
+}
+#scrolltime {
+    background-color: rgb(10, 10, 10);
+    overflow-x: scroll;
+    padding-bottom: 5px;
+}
